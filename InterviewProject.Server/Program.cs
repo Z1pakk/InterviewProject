@@ -1,3 +1,13 @@
+using InterviewProject.Data;
+using InterviewProject.Data.Model;
+using InterviewProject.InitialData.Classes;
+using InterviewProject.InitialData.Interfaces;
+using InterviewProject.Services.Classes;
+using InterviewProject.Services.Interfaces;
+using InterviewProject.SqlServer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,7 +15,38 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDbSqlConnection")));
+
+builder.Services.AddControllers();
+
+builder.Services.AddIdentity<User, Role>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 0;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+})
+.AddEntityFrameworkStores<DataContext>()
+.AddDefaultTokenProviders()
+.AddUserStore<Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore<User, Role, DataContext, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityUserToken<string>, IdentityRoleClaim<string>>>()
+.AddRoleStore<Microsoft.AspNetCore.Identity.EntityFrameworkCore.RoleStore<Role, DataContext, string, UserRole, IdentityRoleClaim<string>>>()
+.AddRoleManager<RoleManager<Role>>()
+.AddUserManager<UserManager<User>>();
+
+builder.Services.AddScoped<IDataContext, DataContext>();
+
+builder.Services.AddScoped<ISecurityService, SecurityService>();
+
+builder.Services.AddScoped<IDatabaseInitializerService, DatabaseInitializerService>();
+
 var app = builder.Build();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -16,29 +57,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseAuthorization();
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+app.MapControllers();
+
+app.MapFallbackToFile("index.html");
+
+// Seed the db
+using (var serviceScope = app.Services.CreateScope())
+{
+    var dbInitializer = serviceScope.ServiceProvider.GetRequiredService<IDatabaseInitializerService>();
+    dbInitializer.EnsureInitialData();
+}
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
