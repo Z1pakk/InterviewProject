@@ -7,4 +7,9 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\InterviewProject.Client\</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\app\account\login\classes\" />
+    <Folder Include="src\assets\fonts\" />
+    <Folder Include="src\assets\images\" />
+  </ItemGroup>
 </Project>

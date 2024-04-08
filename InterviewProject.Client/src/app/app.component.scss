@@ -1,0 +1,8 @@
+﻿.main-wrapper {
+  min-height: calc(100% - 64px);
+  height: 0;
+
+  mat-card {
+    height: 100%;
+  }
+}

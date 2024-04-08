@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'styles/roboto.scss';
+@import 'styles/material-icons.scss';
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mdc-notched-outline__notch {
+  border-right: 0;
+}
+
+.text-center-imp {
+  @apply text-center #{!important};
+}
