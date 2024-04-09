@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace InterviewProject.Services.Classes
 {
+    /// <summary>
+    /// Main service to work with authentication
+    /// </summary>
     public class AccountService : IAccountService
     {
         private readonly IMapper _mapper;

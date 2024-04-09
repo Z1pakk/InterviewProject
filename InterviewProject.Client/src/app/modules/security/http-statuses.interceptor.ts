@@ -16,7 +16,7 @@ export class HttpStatusesInterceptor implements HttpInterceptor {
           const toastrService = this.injector.get(ToastrService);
           let message = '';
 
-          if(err.error.errors) {
+          if(err?.error?.errors) {
             const values: string[] = Object.values(err.error.errors);
             message = values.join(";")
           } else {

@@ -1,11 +1,13 @@
 ﻿using InterviewProject.Data.DTO;
 using InterviewProject.Data.Filters;
 using InterviewProject.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InterviewProject.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class NoteController: Controller
     {

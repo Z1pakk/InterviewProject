@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InterviewProject.Services.Classes
 {
+    /// <summary>
+    /// Main service for user
+    /// </summary>
     public class UserService: IUserService
     {
         private readonly IDataContext _context;
@@ -36,6 +39,12 @@ namespace InterviewProject.Services.Classes
                 .AsQueryable();
         }
         
+        /// <summary>
+        /// Main method to work with grids
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<PageResult<UserDTO>> GetPage(FilterCommand? command, CancellationToken cancellationToken)
         {
             var query = this.GetQueryable().AsNoTracking();
@@ -99,6 +108,7 @@ namespace InterviewProject.Services.Classes
                 }
             }
             
+            // Check if an user with the same email exists
             var existingUserByEmail = (await _userManager.FindByEmailAsync(userDTO.Email));
             if (existingUserByEmail != null && (existingUserByEmail?.Id != user.Id || user.Id == null))
             {
@@ -120,6 +130,7 @@ namespace InterviewProject.Services.Classes
                 await _userManager.UpdateAsync(user);
             }
             
+            // Assign a role
             if (!string.IsNullOrEmpty(userDTO.RoleName))
             {
                 var roleToAssign = await _context.Set<Role>().FirstOrDefaultAsync(r => r.Name.ToLower() == userDTO.RoleName, cancellationToken);
@@ -138,6 +149,7 @@ namespace InterviewProject.Services.Classes
                 }, cancellationToken);
             }
 
+            // Update password
             if (!string.IsNullOrEmpty(userDTO.Password))
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -161,6 +173,7 @@ namespace InterviewProject.Services.Classes
             {
                 throw new UserNotFoundException();
             }
+            // Use transaction to ensure that both related notes and a user are deleted
             var executionStrategy = this._context.Database.CreateExecutionStrategy();
             return await executionStrategy.ExecuteAsync(async () =>
             {

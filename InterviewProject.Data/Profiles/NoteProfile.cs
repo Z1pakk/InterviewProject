@@ -4,7 +4,9 @@ using InterviewProject.Data.Model;
 
 namespace InterviewProject.Data.Profiles
 {
-    
+    /// <summary>
+    /// A profile for mapper
+    /// </summary>
     public class NoteProfile: Profile
     {
         public NoteProfile()

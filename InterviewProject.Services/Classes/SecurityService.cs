@@ -4,6 +4,9 @@ using InterviewProject.Services.Interfaces;
 
 namespace InterviewProject.Services.Classes
 {
+    /// <summary>
+    /// Additional service for security features
+    /// </summary>
     public class SecurityService: ISecurityService
     {
         /// <summary>

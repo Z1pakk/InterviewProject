@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace InterviewProject.Data.Profiles
 {
+    /// <summary>
+    /// A profile for mapper
+    /// </summary>
     public class UserProfile: Profile
     {
         public UserProfile()

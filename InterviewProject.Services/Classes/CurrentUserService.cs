@@ -2,10 +2,12 @@
 using InterviewProject.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Primitives;
 
 namespace InterviewProject.Services.Classes
 {
+    /// <summary>
+    /// Main service for working with current logged user
+    /// </summary>
     public class CurrentUserService: ICurrentUserService
     {
         private readonly UserManager<User> _userManager;

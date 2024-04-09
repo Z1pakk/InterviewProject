@@ -5,6 +5,11 @@ using InterviewProject.Data.Interfaces;
 
 namespace InterviewProject.Services.Utils
 {
+    /// <summary>
+    /// A helper which uses for sorting data. It is not implemented on UI yet.
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
     public static class SortService<TEntity, TKey> // : IFilterSortService<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
         where TKey : IEquatable<TKey>

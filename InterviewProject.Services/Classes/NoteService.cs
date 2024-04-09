@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InterviewProject.Services.Classes
 {
+    /// <summary>
+    /// Main service for notes
+    /// </summary>
     public class NoteService: INoteService
     {
         private readonly IDataContext _context;
