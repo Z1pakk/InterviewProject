@@ -1,0 +1,5 @@
+@use '@angular/material' as mat;
+
+:host ::ng-deep .reduce-search-input-density {
+  @include mat.form-field-density(-4);
+}

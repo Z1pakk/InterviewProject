@@ -1,0 +1,27 @@
+<mat-toolbar color="primary" class="flex justify-between main-toolbar">
+  <span>
+    <button mat-button routerLink="/">Interview Project</button>
+  </span>
+  <div>
+    <button *ngIf="!isCurrentUserAuthenticated" mat-button routerLink="/login">
+      <mat-icon>power_settings_new</mat-icon>
+      Login
+    </button>
+    <button *ngIf="isCurrentUserAuthenticated" mat-button routerLink="/notes">
+      <mat-icon>description</mat-icon>
+      Notes
+    </button>
+    <button *ngIf="isCurrentUserAuthenticated && isCurrentUserAdmin" mat-button routerLink="/users">
+      <mat-icon>people</mat-icon>
+      Users
+    </button>
+    <button *ngIf="isCurrentUserAuthenticated" mat-button routerLink="/profile">
+      <mat-icon>manage_accounts</mat-icon>
+      Profile
+    </button>
+    <button *ngIf="isCurrentUserAuthenticated" mat-button (click)="logoutClicked()">
+      <mat-icon>exit_to_app</mat-icon>
+      Logout
+    </button>
+  </div>
+</mat-toolbar>

@@ -1,4 +1,6 @@
 import {Component} from "@angular/core";
+import {AccountService} from "../../services/account.service";
+import {IUser} from "../../../users/interfaces/user";
 
 @Component({
   selector: "profile",
@@ -6,14 +8,20 @@ import {Component} from "@angular/core";
   styleUrls: ["./profile.component.scss"]
 })
 export class ProfileComponent {
-  user: any = {
-    name: "Test",
-    email: "test@test.com",
-    role: "Admin"
-  };
+  user: IUser = <IUser>{};
 
-  constructor() {
+  constructor(
+    private accountService: AccountService
+  ) {
   }
 
+  ngOnInit() {
+    this.getProfile();
+  }
 
+  private getProfile() {
+    this.accountService.me().subscribe(profile => {
+      this.user = profile;
+    })
+  }
 }

@@ -1,0 +1,5 @@
+@use '@angular/material' as mat;
+
+.justify-end-imp {
+  @apply justify-end #{!important}
+}

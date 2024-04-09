@@ -4,3 +4,6 @@ GET {{InterviewProject_HostAddress}}/api/weatherforecast/
 Accept: application/json
 
 ###
+
+POST {{InterviewProject_HostAddress}}/api/account/login/
+Accept: application/json

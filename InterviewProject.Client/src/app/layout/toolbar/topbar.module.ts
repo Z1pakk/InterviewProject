@@ -1,19 +1,21 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from "@angular/core";
-import {ToolbarComponent} from "./components/toolbar.component";
+import {TopbarComponent} from "./components/topbar.component";
 import {MaterialUiModule} from "../../material-ui.module";
 import {RouterModule} from "@angular/router";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
-    ToolbarComponent
+    TopbarComponent
   ],
   exports: [
-    ToolbarComponent
+    TopbarComponent
   ],
   imports: [
+    CommonModule,
     RouterModule,
     MaterialUiModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ToolBarModule {}
+export class TopbarModule {}

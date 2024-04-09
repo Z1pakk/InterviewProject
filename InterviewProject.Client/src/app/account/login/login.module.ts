@@ -3,6 +3,7 @@ import {LoginComponent} from "./components/login.component";
 import {RouterModule} from "@angular/router";
 import {MaterialUiModule} from "../../material-ui.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AccountService} from "../services/account.service";
 
 @NgModule({
   declarations: [
